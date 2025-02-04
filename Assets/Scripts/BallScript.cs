@@ -1,4 +1,5 @@
 //Valentine Nkowa
+// 1/31/25
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,7 @@ public class BallScript : MonoBehaviour
     protected Rigidbody rb;
     [SerializeField] protected Vector3 StartForce = Vector3.one;
     [SerializeField] protected float worldVelocity = 25;
+    [SerializeField] protected int Damage = 1;
 
     //Order of func loading
     //Awake
@@ -41,5 +43,14 @@ public class BallScript : MonoBehaviour
         nV3.z = Mathf.Clamp(hV3.z, -worldVelocity, worldVelocity);
 
         rb.velocity = nV3;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        BreakableBrick bb = collision.gameObject.GetComponent<BreakableBrick>();
+        if (bb != null)
+        {
+            bb.TakeDamage(Damage); //uses damaging method in Brick class for the ball to dmg the bricks
+        }
     }
 }
